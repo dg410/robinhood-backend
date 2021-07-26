@@ -22,5 +22,11 @@ def change_quota(namespace, cpu, ram):
     return request_quota.patch_quota(namespace, cpu, ram)
 
 
+@app.after_request
+def apply_caching(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return response
+
+
 if __name__ == '__main__':
     app.run()
