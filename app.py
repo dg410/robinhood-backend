@@ -10,7 +10,7 @@ app = Flask(__name__)
 def get_stats(search_type, span):
     if span not in ["1mon", "3mon", "6mon"]:
         return "{'error': 'Wrong time span'}"
-    if span not in ["stats", "data"]:
+    if search_type not in ["stats", "data"]:
         return "{'error': 'Wrong search type'}"
     return json.dumps(request_splunk.splunk(search_type, span))
 
