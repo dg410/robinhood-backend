@@ -1,5 +1,7 @@
 from flask import Flask
 import requests
+import request_quota
+
 
 app = Flask(__name__)
 
@@ -17,6 +19,11 @@ def get_splunk(span):
 
     response = requests.request("POST", url, headers=headers, verify=False, data=payload)
     return(response.text)
+
+
+@app.route('/quota/<namespace>/<cpu>/<ram>')
+def change_quota(namespace, cpu, ram):
+    return request_quota.patch_quota(namespace, cpu, ram)
 
 
 if __name__ == '__main__':
