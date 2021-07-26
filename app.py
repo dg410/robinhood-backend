@@ -1,18 +1,19 @@
 from flask import Flask
 import request_quota
 import request_splunk
-import json
+
 
 app = Flask(__name__)
 
 
-@app.route('/clients/<search_type>/<span>')
-def get_stats(search_type, span):
+@app.route('/clients/<span>')
+def get_stats(span):
     if span not in ["1mon", "3mon", "6mon"]:
         return "{'error': 'Wrong time span'}"
-    if search_type not in ["stats", "data"]:
-        return "{'error': 'Wrong search type'}"
-    return json.dumps(request_splunk.splunk(search_type, span))
+    results = {}
+    for namespace in ["poor_project", "rich_project"]:
+        results[namespace] = request_splunk.splunk(namespace, span)
+    return results
 
 
 
