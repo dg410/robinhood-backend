@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__)
 
 
-@app.route('/splunk')
+@app.route('/clients')
 def get_splunk():
     url = "https://40.71.31.225:8089/services/search/jobs"
 
